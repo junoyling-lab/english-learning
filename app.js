@@ -24,6 +24,8 @@ const state = {
   isBusy: false
 };
 
+const ACCESS_HASH = "817b662f67b67f7a03e10a15814fa50a90a30645d5522f604a61d61104af41d4";
+const ACCESS_GRANTED_KEY = "englishLearningAccessGranted";
 const DEFAULT_RULES_KEY = "defaultLearningRulesInitialized";
 const DEFAULT_RULES_VERSION_KEY = "defaultLearningRulesVersion";
 const RULES_CLEARED_KEY = "learningRulesCleared";
@@ -40,6 +42,11 @@ const DEFAULT_LEARNING_RULES = [
 ].join("\n");
 
 const els = {
+  accessGate: document.querySelector("#accessGate"),
+  accessForm: document.querySelector("#accessForm"),
+  accessPassword: document.querySelector("#accessPassword"),
+  accessError: document.querySelector("#accessError"),
+  appShell: document.querySelector("#appShell"),
   apiKeyInput: document.querySelector("#apiKeyInput"),
   saveKeyBtn: document.querySelector("#saveKeyBtn"),
   openKeyBtn: document.querySelector("#openKeyBtn"),
@@ -65,6 +72,16 @@ const els = {
 init();
 
 async function init() {
+  bindAccessGate();
+  if (!hasAccess()) {
+    els.accessPassword.focus();
+    return;
+  }
+  await startApp();
+}
+
+async function startApp() {
+  unlockApp();
   els.apiKeyInput.value = getStoredApiKey();
   bindEvents();
   await initializeDefaultRules();
@@ -72,6 +89,36 @@ async function init() {
   renderKeyStatus();
   addMessage("assistant", "你好。默认学习规则已经准备好。你可以说“显示当前规则”查看，也可以在聊天里继续修改或清空规则。");
   registerServiceWorker();
+}
+
+function bindAccessGate() {
+  els.accessForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const password = els.accessPassword.value;
+    if (await verifyAccess(password)) {
+      localStorage.setItem(ACCESS_GRANTED_KEY, "true");
+      els.accessPassword.value = "";
+      els.accessError.classList.add("hidden");
+      await startApp();
+      return;
+    }
+    els.accessError.classList.remove("hidden");
+  });
+}
+
+function hasAccess() {
+  return localStorage.getItem(ACCESS_GRANTED_KEY) === "true";
+}
+
+async function verifyAccess(password) {
+  const encoded = new TextEncoder().encode(password);
+  const digest = await crypto.subtle.digest("SHA-256", encoded);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("") === ACCESS_HASH;
+}
+
+function unlockApp() {
+  els.accessGate.classList.add("hidden");
+  els.appShell.classList.remove("app-locked");
 }
 
 function bindEvents() {
