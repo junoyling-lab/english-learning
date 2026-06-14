@@ -9,7 +9,18 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="app-shell">
+    <div id="accessGate" class="access-gate" role="dialog" aria-modal="true" aria-labelledby="accessTitle">
+      <form id="accessForm" class="access-card">
+        <p class="eyebrow">Private Access</p>
+        <h1 id="accessTitle">请输入访问密码</h1>
+        <p>这是你的个人英语学习工具。通过后这台设备会记住访问状态。</p>
+        <input id="accessPassword" type="password" autocomplete="current-password" placeholder="Access password">
+        <button type="submit">进入</button>
+        <p id="accessError" class="access-error hidden">密码不正确。</p>
+      </form>
+    </div>
+
+    <div id="appShell" class="app-shell app-locked">
       <header class="topbar">
         <div>
           <p class="eyebrow">Personal English Assistant</p>
