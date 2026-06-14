@@ -118,6 +118,7 @@ async function verifyAccess(password) {
 
 function unlockApp() {
   els.accessGate.classList.add("hidden");
+  els.appShell.classList.remove("hidden");
   els.appShell.classList.remove("app-locked");
 }
 
