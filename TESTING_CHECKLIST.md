@@ -1,0 +1,23 @@
+# Testing Checklist
+
+- First open shows the user's latest default learning rules.
+- `显示当前规则` returns the default rules before the user clears them.
+- The default rules do not require English explanations.
+- The top of the app does not show the API key field directly.
+- The `API Key` button opens a modal input and shows saved status after saving.
+- After `忘掉所有规则`, `显示当前规则` returns `目前还没有设置规则。`
+- A normal English question does not force a full new-word format unless the user asks for new vocabulary.
+- `以后每个词给 5 个例句` saves a rule.
+- `显示当前规则` shows the saved rule.
+- `忘掉所有规则` clears rules.
+- `给我 5 个职场单词` generates only when requested.
+- During Gemini generation, the UI shows an AI working state and disables repeated send.
+- `总结并存到单词本` saves structured vocabulary.
+- Duplicate terms update existing entries instead of creating duplicates.
+- `删除 negotiate` soft deletes the item.
+- `撤销` restores the latest AI operation.
+- `把 negotiate 标记为重要` sets `isImportant=true`.
+- Important words appear before ordinary known words during review.
+- Export produces JSON with vocabulary, rules, and logs.
+- Import restores vocabulary, rules, important marks, and notes.
+- PWA manifest loads without errors.
