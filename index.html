@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2563eb">
+    <title>Gemini English Learning</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Personal English Assistant</p>
+          <h1>英语学习助手</h1>
+        </div>
+        <div class="top-actions">
+          <button id="openKeyBtn" class="secondary" type="button">API Key <span id="keyStatus" class="status-dot">未设置</span></button>
+          <button id="installBtn" class="icon-btn hidden" type="button" title="Install app">+</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="panel chat-panel" aria-labelledby="chatTitle">
+          <div class="section-head">
+            <div>
+              <h2 id="chatTitle">Chat</h2>
+              <p id="ruleSummary">当前没有设置学习规则。</p>
+            </div>
+            <button id="undoBtn" class="secondary" type="button">撤销</button>
+          </div>
+          <div id="chatLog" class="chat-log" aria-live="polite"></div>
+          <form id="chatForm" class="chat-form">
+            <textarea id="chatInput" rows="3" placeholder="例如：显示当前规则 / 以后每个词给5个例句 / 给我5个职场单词 / 总结并存到单词本"></textarea>
+            <button type="submit">发送</button>
+          </form>
+        </section>
+
+        <nav class="tabs compact-tabs" aria-label="Views">
+          <button class="tab-btn" type="button" data-view="wordbook">单词库</button>
+          <button class="tab-btn" type="button" data-view="review">复习</button>
+          <button class="tab-btn" type="button" data-view="backup">备份</button>
+        </nav>
+
+        <section id="wordbookView" class="panel view-panel hidden">
+          <div class="section-head">
+            <div>
+              <h2>单词库</h2>
+              <p id="wordCount">0 个词条</p>
+            </div>
+            <input id="searchInput" class="small-input" type="search" placeholder="搜索词义/场景/笔记">
+          </div>
+          <div id="wordList" class="word-list"></div>
+        </section>
+
+        <section id="reviewView" class="panel view-panel hidden">
+          <div class="section-head">
+            <div>
+              <h2>复习</h2>
+              <p>重要词会更早出现。</p>
+            </div>
+            <button id="refreshReviewBtn" class="secondary" type="button">刷新</button>
+          </div>
+          <div id="reviewList" class="word-list"></div>
+        </section>
+
+        <section id="backupView" class="panel view-panel hidden">
+          <h2>备份</h2>
+          <p>当前不是自动云同步。导出 JSON 后，浏览器会下载一个备份文件；你可以手动保存到 OneDrive、Google Drive、iCloud Drive 或电脑文件夹。是否免费取决于你的云盘账号免费空间，超过额度通常需要付费。</p>
+          <div class="backup-actions">
+            <button id="exportBtn" type="button">导出备份</button>
+            <label class="file-btn">
+              导入备份
+              <input id="importInput" type="file" accept="application/json">
+            </label>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="keyDialog" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="keyTitle">
+      <section class="modal-card">
+        <div class="section-head">
+          <div>
+            <h2 id="keyTitle">Gemini API Key</h2>
+            <p>只保存在这台设备的浏览器里，不会上传到云端。</p>
+          </div>
+          <button id="closeKeyBtn" class="secondary icon-btn" type="button" title="Close">×</button>
+        </div>
+        <div class="key-row">
+          <input id="apiKeyInput" type="password" autocomplete="off" placeholder="Paste Gemini API key">
+          <button id="saveKeyBtn" type="button">保存</button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
