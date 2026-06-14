@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-label="English AI">
+  <rect width="192" height="192" rx="36" fill="#2563eb"/>
+  <circle cx="144" cy="48" r="22" fill="#facc15"/>
+  <path d="M42 58h70v18H42zm0 34h108v18H42zm0 34h82v18H42z" fill="#ffffff"/>
+  <text x="96" y="172" text-anchor="middle" font-size="28" font-family="Arial, sans-serif" font-weight="700" fill="#dbeafe">EN</text>
+</svg>
