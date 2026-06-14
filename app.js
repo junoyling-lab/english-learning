@@ -25,7 +25,7 @@ const state = {
 };
 
 const ACCESS_HASH = "817b662f67b67f7a03e10a15814fa50a90a30645d5522f604a61d61104af41d4";
-const ACCESS_GRANTED_KEY = "englishLearningAccessGranted";
+const ACCESS_GRANTED_KEY = "englishLearningAccessGrantedV2";
 const DEFAULT_RULES_KEY = "defaultLearningRulesInitialized";
 const DEFAULT_RULES_VERSION_KEY = "defaultLearningRulesVersion";
 const RULES_CLEARED_KEY = "learningRulesCleared";
