@@ -15,7 +15,10 @@ export function buildSavePrompt({ userMessage, rulesText, recentMessages = [] })
   return [
     appSystemText(rulesText),
     "The host application will persist your JSON output into its IndexedDB wordbook.",
-    "Extract the vocabulary item or items the user asked to save, including references such as '这个词', '它', '刚才的词', or '上述单词'. Resolve those references from the recent chat context.",
+    "Extract every vocabulary item the user asked to save. A single request may contain multiple terms separated by commas, Chinese commas, Chinese enumeration commas, slashes, ampersands, 'and', or line breaks.",
+    "Examples: '保存 alignment, stakeholder buy-in, trade-off' and '保存单词A、单词B、单词C' must produce three separate objects in items.",
+    "Also resolve references such as '这个词', '它', '刚才的词', '这些词', or '上述单词' from the recent chat context.",
+    "Create exactly one item object per distinct term or phrase. Do not combine multiple terms into one term field.",
     "Do not answer that you cannot write local files. Return the structured vocabulary data so the host app can save it.",
     "If the requested term appears in the latest assistant answer, preserve the useful explanation, collocations, examples, scenarios, and notes already discussed.",
     "Return JSON only in this shape:",
@@ -57,6 +60,8 @@ function appSystemText(rulesText) {
     "There are no preset learning rules.",
     cleaned ? `Current user-created rules:\n${cleaned}` : "Current user-created rules: none.",
     "If no user-created rules exist, answer only the current request without forcing a study template.",
+    "Treat background and scenario preferences as guidance, not rigid constraints. Choose the most natural context for each word and vary contexts when that improves understanding.",
+    "Do not force every explanation or example into leasing, management, or Australian workplace scenarios. Use those contexts when genuinely relevant, and use other practical contexts when they are clearer.",
     "Do not claim an item is saved unless it appears in provided app data."
   ].join("\n");
 }
@@ -67,6 +72,7 @@ function richAnswerStyle() {
     "- Give a complete, helpful answer rather than a short tool response.",
     "- Use clear Markdown structure when useful: headings, bullets, numbered steps, bold terms, and tables.",
     "- For English learning questions, explain nuance, natural usage, common mistakes, and provide practical examples when relevant.",
+    "- Keep examples contextually varied and natural. Do not mechanically reuse the same workplace scenario.",
     "- Match the user's language. Chinese explanations are welcome, with English examples kept natural.",
     "- Do not be verbose for simple questions, but do not under-answer learning requests."
   ].join("\n");
