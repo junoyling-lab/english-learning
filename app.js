@@ -12,8 +12,8 @@ import {
   upsertVocabulary
 } from "./db.js";
 import { callGemini, extractJson, getStoredApiKey, setStoredApiKey } from "./gemini.js";
-import { buildChatPrompt, buildGeneratePrompt, buildSavePrompt, buildSearchPrompt } from "./prompts.js?v=save1";
-import { classifyLocalIntent, formatRules, mergeRuleText } from "./rules.js?v=save1";
+import { buildChatPrompt, buildGeneratePrompt, buildSavePrompt, buildSearchPrompt } from "./prompts.js?v=save2";
+import { classifyLocalIntent, formatRules, mergeRuleText } from "./rules.js?v=save2";
 import { nextReviewDate, sortForReview } from "./review.js";
 
 const state = {
