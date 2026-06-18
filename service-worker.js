@@ -1,13 +1,13 @@
-const CACHE_NAME = "gemini-english-learning-v7";
+const CACHE_NAME = "gemini-english-learning-v8";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
-  "./app.js?v=save1",
+  "./app.js?v=save2",
   "./db.js",
   "./gemini.js",
-  "./prompts.js?v=save1",
-  "./rules.js?v=save1",
+  "./prompts.js?v=save2",
+  "./rules.js?v=save2",
   "./review.js",
   "./manifest.json",
   "./icon.svg"
