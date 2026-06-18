@@ -5,7 +5,7 @@ export function buildChatPrompt({ userMessage, rulesText, recentMessages = [], v
     formatVocabularyContext(vocabulary),
     formatRecentMessages(recentMessages),
     `User message:\n${userMessage}`,
-    "Answer in a natural Gemini-like chat style. Do not save, delete, or change data unless the app asks you through a structured prompt."
+    "Answer in a natural Gemini-like chat style. The host app can save vocabulary to IndexedDB. Never tell the user that you cannot write local files when they ask to save a word; the app handles persistence through a structured save action."
   ]
     .filter(Boolean)
     .join("\n\n");
@@ -14,7 +14,10 @@ export function buildChatPrompt({ userMessage, rulesText, recentMessages = [], v
 export function buildSavePrompt({ userMessage, rulesText, recentMessages = [] }) {
   return [
     appSystemText(rulesText),
-    "Extract only vocabulary items the user asked to save or summarize into the wordbook.",
+    "The host application will persist your JSON output into its IndexedDB wordbook.",
+    "Extract the vocabulary item or items the user asked to save, including references such as '这个词', '它', '刚才的词', or '上述单词'. Resolve those references from the recent chat context.",
+    "Do not answer that you cannot write local files. Return the structured vocabulary data so the host app can save it.",
+    "If the requested term appears in the latest assistant answer, preserve the useful explanation, collocations, examples, scenarios, and notes already discussed.",
     "Return JSON only in this shape:",
     '{"items":[{"term":"","type":"","cnMeaning":"","enMeaning":"","wordFamily":[],"collocations":[],"examples":[],"scenarios":[],"tags":[],"aiSummary":"","userNotes":""}]}',
     formatRecentMessages(recentMessages),
