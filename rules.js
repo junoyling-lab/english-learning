@@ -18,7 +18,8 @@ export function classifyLocalIntent(text) {
   if (
     /(总结|保存|存下|存起来|收录|记住|存到|加入|添加到).*(单词本|词库|wordbook|这个词|这个单词|该词|它|这些词|上述词|刚才的词|单词|词语|表达|短语)/i.test(message) ||
     /(?:把|将).*(?:单词|词语|表达|短语|这个|该词|它|[A-Za-z][A-Za-z\s-]*).*(?:保存|存下|存起来|收录|记住|加入)/i.test(message) ||
-    /^(?:保存|存下|存起来|收录|记住)\s*[A-Za-z][A-Za-z\s-]*[。.!！]?$/i.test(message)
+    /^(?:保存|存下|存起来|收录|记住)\s*[A-Za-z][A-Za-z\s,'’，、/&+-]*(?:\s+and\s+[A-Za-z][A-Za-z\s-]*)*[。.!！]?$/i.test(message) ||
+    /^(?:保存|存下|存起来|收录|记住)[：:]?\s*[\s\S]*(?:\n|、|,|，|\/|&|\sand\s)[\s\S]*$/i.test(message)
   ) {
     return { intent: "save_summary" };
   }
